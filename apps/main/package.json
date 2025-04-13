@@ -11,6 +11,7 @@
     "preview": "rsbuild preview"
   },
   "dependencies": {
+    "@micro-zoe/micro-app": "1.0.0-rc.24",
     "react": "^18.3.1",
     "react-dom": "^18.3.1"
   },
