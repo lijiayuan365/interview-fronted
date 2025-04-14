@@ -13,6 +13,9 @@
 import { Route as rootRoute } from './routes/__root'
 import { Route as AboutImport } from './routes/about'
 import { Route as IndexImport } from './routes/index'
+import { Route as SubVue3IndexImport } from './routes/sub-vue3/index'
+import { Route as SubNuxtIndexImport } from './routes/sub-nuxt/index'
+import { Route as SubNextIndexImport } from './routes/sub-next/index'
 import { Route as UserIndexUserIdImport } from './routes/user/index.$userId'
 
 // Create/Update Routes
@@ -26,6 +29,24 @@ const AboutRoute = AboutImport.update({
 const IndexRoute = IndexImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const SubVue3IndexRoute = SubVue3IndexImport.update({
+  id: '/sub-vue3/',
+  path: '/sub-vue3/',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const SubNuxtIndexRoute = SubNuxtIndexImport.update({
+  id: '/sub-nuxt/',
+  path: '/sub-nuxt/',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const SubNextIndexRoute = SubNextIndexImport.update({
+  id: '/sub-next/',
+  path: '/sub-next/',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -53,6 +74,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AboutImport
       parentRoute: typeof rootRoute
     }
+    '/sub-next/': {
+      id: '/sub-next/'
+      path: '/sub-next'
+      fullPath: '/sub-next'
+      preLoaderRoute: typeof SubNextIndexImport
+      parentRoute: typeof rootRoute
+    }
+    '/sub-nuxt/': {
+      id: '/sub-nuxt/'
+      path: '/sub-nuxt'
+      fullPath: '/sub-nuxt'
+      preLoaderRoute: typeof SubNuxtIndexImport
+      parentRoute: typeof rootRoute
+    }
+    '/sub-vue3/': {
+      id: '/sub-vue3/'
+      path: '/sub-vue3'
+      fullPath: '/sub-vue3'
+      preLoaderRoute: typeof SubVue3IndexImport
+      parentRoute: typeof rootRoute
+    }
     '/user/index/$userId': {
       id: '/user/index/$userId'
       path: '/user/index/$userId'
@@ -68,12 +110,18 @@ declare module '@tanstack/react-router' {
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/sub-next': typeof SubNextIndexRoute
+  '/sub-nuxt': typeof SubNuxtIndexRoute
+  '/sub-vue3': typeof SubVue3IndexRoute
   '/user/index/$userId': typeof UserIndexUserIdRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/sub-next': typeof SubNextIndexRoute
+  '/sub-nuxt': typeof SubNuxtIndexRoute
+  '/sub-vue3': typeof SubVue3IndexRoute
   '/user/index/$userId': typeof UserIndexUserIdRoute
 }
 
@@ -81,27 +129,55 @@ export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/sub-next/': typeof SubNextIndexRoute
+  '/sub-nuxt/': typeof SubNuxtIndexRoute
+  '/sub-vue3/': typeof SubVue3IndexRoute
   '/user/index/$userId': typeof UserIndexUserIdRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/about' | '/user/index/$userId'
+  fullPaths:
+    | '/'
+    | '/about'
+    | '/sub-next'
+    | '/sub-nuxt'
+    | '/sub-vue3'
+    | '/user/index/$userId'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/about' | '/user/index/$userId'
-  id: '__root__' | '/' | '/about' | '/user/index/$userId'
+  to:
+    | '/'
+    | '/about'
+    | '/sub-next'
+    | '/sub-nuxt'
+    | '/sub-vue3'
+    | '/user/index/$userId'
+  id:
+    | '__root__'
+    | '/'
+    | '/about'
+    | '/sub-next/'
+    | '/sub-nuxt/'
+    | '/sub-vue3/'
+    | '/user/index/$userId'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
+  SubNextIndexRoute: typeof SubNextIndexRoute
+  SubNuxtIndexRoute: typeof SubNuxtIndexRoute
+  SubVue3IndexRoute: typeof SubVue3IndexRoute
   UserIndexUserIdRoute: typeof UserIndexUserIdRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
+  SubNextIndexRoute: SubNextIndexRoute,
+  SubNuxtIndexRoute: SubNuxtIndexRoute,
+  SubVue3IndexRoute: SubVue3IndexRoute,
   UserIndexUserIdRoute: UserIndexUserIdRoute,
 }
 
@@ -117,6 +193,9 @@ export const routeTree = rootRoute
       "children": [
         "/",
         "/about",
+        "/sub-next/",
+        "/sub-nuxt/",
+        "/sub-vue3/",
         "/user/index/$userId"
       ]
     },
@@ -125,6 +204,15 @@ export const routeTree = rootRoute
     },
     "/about": {
       "filePath": "about.tsx"
+    },
+    "/sub-next/": {
+      "filePath": "sub-next/index.tsx"
+    },
+    "/sub-nuxt/": {
+      "filePath": "sub-nuxt/index.tsx"
+    },
+    "/sub-vue3/": {
+      "filePath": "sub-vue3/index.tsx"
     },
     "/user/index/$userId": {
       "filePath": "user/index.$userId.tsx"
