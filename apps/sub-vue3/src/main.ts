@@ -13,8 +13,3 @@ app.use(router)
 
 app.mount('#app')
 
-// 导出卸载方法
-// @ts-ignore
-window.unmount = () => {
-  app.unmount()
-}
