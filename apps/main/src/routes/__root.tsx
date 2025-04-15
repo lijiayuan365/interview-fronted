@@ -34,6 +34,12 @@ export const Route = createRootRoute({
         icon: <UserOutlined />,
       },
       {
+        key: '6',
+        path: '/sub-react',
+        label: 'react',
+        icon: <UserOutlined />,
+      },
+      {
         key: '4',
         path: '/sub-next',
         label: 'next',

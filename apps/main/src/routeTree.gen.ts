@@ -14,6 +14,7 @@ import { Route as rootRoute } from './routes/__root'
 import { Route as AboutImport } from './routes/about'
 import { Route as IndexImport } from './routes/index'
 import { Route as SubVue3IndexImport } from './routes/sub-vue3/index'
+import { Route as SubReactIndexImport } from './routes/sub-react/index'
 import { Route as SubNuxtIndexImport } from './routes/sub-nuxt/index'
 import { Route as SubNextIndexImport } from './routes/sub-next/index'
 import { Route as UserIndexUserIdImport } from './routes/user/index.$userId'
@@ -35,6 +36,12 @@ const IndexRoute = IndexImport.update({
 const SubVue3IndexRoute = SubVue3IndexImport.update({
   id: '/sub-vue3/',
   path: '/sub-vue3/',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const SubReactIndexRoute = SubReactIndexImport.update({
+  id: '/sub-react/',
+  path: '/sub-react/',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -88,6 +95,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SubNuxtIndexImport
       parentRoute: typeof rootRoute
     }
+    '/sub-react/': {
+      id: '/sub-react/'
+      path: '/sub-react'
+      fullPath: '/sub-react'
+      preLoaderRoute: typeof SubReactIndexImport
+      parentRoute: typeof rootRoute
+    }
     '/sub-vue3/': {
       id: '/sub-vue3/'
       path: '/sub-vue3'
@@ -112,6 +126,7 @@ export interface FileRoutesByFullPath {
   '/about': typeof AboutRoute
   '/sub-next': typeof SubNextIndexRoute
   '/sub-nuxt': typeof SubNuxtIndexRoute
+  '/sub-react': typeof SubReactIndexRoute
   '/sub-vue3': typeof SubVue3IndexRoute
   '/user/index/$userId': typeof UserIndexUserIdRoute
 }
@@ -121,6 +136,7 @@ export interface FileRoutesByTo {
   '/about': typeof AboutRoute
   '/sub-next': typeof SubNextIndexRoute
   '/sub-nuxt': typeof SubNuxtIndexRoute
+  '/sub-react': typeof SubReactIndexRoute
   '/sub-vue3': typeof SubVue3IndexRoute
   '/user/index/$userId': typeof UserIndexUserIdRoute
 }
@@ -131,6 +147,7 @@ export interface FileRoutesById {
   '/about': typeof AboutRoute
   '/sub-next/': typeof SubNextIndexRoute
   '/sub-nuxt/': typeof SubNuxtIndexRoute
+  '/sub-react/': typeof SubReactIndexRoute
   '/sub-vue3/': typeof SubVue3IndexRoute
   '/user/index/$userId': typeof UserIndexUserIdRoute
 }
@@ -142,6 +159,7 @@ export interface FileRouteTypes {
     | '/about'
     | '/sub-next'
     | '/sub-nuxt'
+    | '/sub-react'
     | '/sub-vue3'
     | '/user/index/$userId'
   fileRoutesByTo: FileRoutesByTo
@@ -150,6 +168,7 @@ export interface FileRouteTypes {
     | '/about'
     | '/sub-next'
     | '/sub-nuxt'
+    | '/sub-react'
     | '/sub-vue3'
     | '/user/index/$userId'
   id:
@@ -158,6 +177,7 @@ export interface FileRouteTypes {
     | '/about'
     | '/sub-next/'
     | '/sub-nuxt/'
+    | '/sub-react/'
     | '/sub-vue3/'
     | '/user/index/$userId'
   fileRoutesById: FileRoutesById
@@ -168,6 +188,7 @@ export interface RootRouteChildren {
   AboutRoute: typeof AboutRoute
   SubNextIndexRoute: typeof SubNextIndexRoute
   SubNuxtIndexRoute: typeof SubNuxtIndexRoute
+  SubReactIndexRoute: typeof SubReactIndexRoute
   SubVue3IndexRoute: typeof SubVue3IndexRoute
   UserIndexUserIdRoute: typeof UserIndexUserIdRoute
 }
@@ -177,6 +198,7 @@ const rootRouteChildren: RootRouteChildren = {
   AboutRoute: AboutRoute,
   SubNextIndexRoute: SubNextIndexRoute,
   SubNuxtIndexRoute: SubNuxtIndexRoute,
+  SubReactIndexRoute: SubReactIndexRoute,
   SubVue3IndexRoute: SubVue3IndexRoute,
   UserIndexUserIdRoute: UserIndexUserIdRoute,
 }
@@ -195,6 +217,7 @@ export const routeTree = rootRoute
         "/about",
         "/sub-next/",
         "/sub-nuxt/",
+        "/sub-react/",
         "/sub-vue3/",
         "/user/index/$userId"
       ]
@@ -210,6 +233,9 @@ export const routeTree = rootRoute
     },
     "/sub-nuxt/": {
       "filePath": "sub-nuxt/index.tsx"
+    },
+    "/sub-react/": {
+      "filePath": "sub-react/index.tsx"
     },
     "/sub-vue3/": {
       "filePath": "sub-vue3/index.tsx"
