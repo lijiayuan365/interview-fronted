@@ -27,11 +27,13 @@ WujieReact.preloadApp({
 WujieReact.preloadApp({
   name: SUB_APP_LIST.NUXT.name,
   url: SUB_APP_LIST.NUXT.url,
+  exec: true,
 })
 
 WujieReact.preloadApp({
   name: SUB_APP_LIST.REACT.name,
   url: SUB_APP_LIST.REACT.url,
+  exec: true,
 })
 
 
