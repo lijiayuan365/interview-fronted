@@ -1,0 +1,18 @@
+<svg width="200" height="200" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- 背景圆形 -->
+  <circle cx="100" cy="100" r="90" fill="#4F46E5" />
+  
+  <!-- 文档/简历图形 -->
+  <rect x="65" y="60" width="70" height="90" rx="5" fill="white" />
+  
+  <!-- 文档上的线条 -->
+  <line x1="80" y1="80" x2="120" y2="80" stroke="#4F46E5" stroke-width="4" stroke-linecap="round" />
+  <line x1="80" y1="95" x2="120" y2="95" stroke="#4F46E5" stroke-width="4" stroke-linecap="round" />
+  <line x1="80" y1="110" x2="120" y2="110" stroke="#4F46E5" stroke-width="4" stroke-linecap="round" />
+  <line x1="80" y1="125" x2="110" y2="125" stroke="#4F46E5" stroke-width="4" stroke-linecap="round" />
+  
+  <!-- 字母 I -->
+  <path d="M100 40 L100 155" stroke="white" stroke-width="12" stroke-linecap="round" />
+  <line x1="80" y1="40" x2="120" y2="40" stroke="white" stroke-width="8" stroke-linecap="round" />
+  <line x1="80" y1="155" x2="120" y2="155" stroke="white" stroke-width="8" stroke-linecap="round" />
+</svg>

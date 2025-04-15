@@ -1,5 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router'
 import WujieReact from 'wujie-react'
+import SUB_APP_LIST from '../../enums/sub-app'
 export const Route = createFileRoute('/sub-react/')({
   component: RouteComponent,
 })
@@ -7,8 +8,8 @@ export const Route = createFileRoute('/sub-react/')({
 function RouteComponent() {
   return <>
     <WujieReact
-      name="react" 
-      url="http://localhost:5004" 
+      name={SUB_APP_LIST.REACT.name} 
+      url={SUB_APP_LIST.REACT.url} 
       sync
     />
   </>

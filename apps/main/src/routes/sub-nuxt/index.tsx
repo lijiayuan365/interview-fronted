@@ -1,6 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router'
 import WujieReact from 'wujie-react'
-
+import SUB_APP_LIST from '../../enums/sub-app'
 export const Route = createFileRoute('/sub-nuxt/')({
   component: RouteComponent,
 })
@@ -8,8 +8,8 @@ export const Route = createFileRoute('/sub-nuxt/')({
 function RouteComponent() {
   return <>
     <WujieReact
-      name="nuxt" 
-      url="http://localhost:5003" 
+      name={SUB_APP_LIST.NUXT.name} 
+      url={SUB_APP_LIST.NUXT.url} 
       sync
     />
   </>

@@ -5,7 +5,7 @@ import { HomeOutlined, InfoCircleOutlined, UserOutlined } from '@ant-design/icon
 import { useState } from 'react';
 import type { MenuProps } from 'antd';
 import type { ReactNode } from 'react';
-
+import logo from '../assets/logo.svg';
 const { Sider, Content } = Layout;
 
 interface RouteItem {
@@ -63,7 +63,11 @@ export const Route = createRootRoute({
     return (
       <Layout className="min-h-screen h-screen">
         <Sider collapsible collapsed={collapsed} onCollapse={(value) => setCollapsed(value)}>
-          <div className="h-8 mx-4 my-4 bg-opacity-20 bg-white" />
+          <div className="flex justify-center items-center h-12 mx-4 my-4">
+            <Link to="/">
+              <img src={logo} alt="logo" className="w-12 h-12" />
+            </Link>
+          </div>
           <Menu 
             theme="dark" 
             defaultSelectedKeys={['1']} 
