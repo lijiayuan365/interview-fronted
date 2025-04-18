@@ -1,5 +1,6 @@
 import { defineConfig } from '@rslib/core';
 
+
 export default defineConfig({
   lib: [
     {
@@ -12,4 +13,7 @@ export default defineConfig({
       syntax: 'es2021',
     },
   ],
+  output: {
+    minify: true,
+  }
 });
