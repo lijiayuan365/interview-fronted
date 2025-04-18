@@ -3,7 +3,6 @@ import { HttpClient } from './http-client';
 // 默认配置
 const DEFAULT_BASE_URL = 'http://localhost:3000';
 
-
 // 创建全局 HTTP 客户端实例
 export const httpClient = new HttpClient({
   baseUrl: DEFAULT_BASE_URL,

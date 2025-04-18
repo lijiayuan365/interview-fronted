@@ -49,8 +49,7 @@ generateApi(config)
  */
 function addCustomFiles(outputPath) {
   // 创建客户端初始化文件
-  let clientContent = `
-import { HttpClient } from './http-client';
+  let clientContent = `import { HttpClient } from './http-client';
 
 // 默认配置
 const DEFAULT_BASE_URL = 'http://localhost:3000';
