@@ -17,6 +17,8 @@ import { Route as SubVue3IndexImport } from './routes/sub-vue3/index'
 import { Route as SubReactIndexImport } from './routes/sub-react/index'
 import { Route as SubNuxtIndexImport } from './routes/sub-nuxt/index'
 import { Route as SubNextIndexImport } from './routes/sub-next/index'
+import { Route as LoginIndexImport } from './routes/login/index'
+import { Route as LoginCallbackImport } from './routes/login/callback'
 import { Route as UserIndexUserIdImport } from './routes/user/index.$userId'
 
 // Create/Update Routes
@@ -57,6 +59,18 @@ const SubNextIndexRoute = SubNextIndexImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
+const LoginIndexRoute = LoginIndexImport.update({
+  id: '/login/',
+  path: '/login/',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const LoginCallbackRoute = LoginCallbackImport.update({
+  id: '/login/callback',
+  path: '/login/callback',
+  getParentRoute: () => rootRoute,
+} as any)
+
 const UserIndexUserIdRoute = UserIndexUserIdImport.update({
   id: '/user/index/$userId',
   path: '/user/index/$userId',
@@ -79,6 +93,20 @@ declare module '@tanstack/react-router' {
       path: '/about'
       fullPath: '/about'
       preLoaderRoute: typeof AboutImport
+      parentRoute: typeof rootRoute
+    }
+    '/login/callback': {
+      id: '/login/callback'
+      path: '/login/callback'
+      fullPath: '/login/callback'
+      preLoaderRoute: typeof LoginCallbackImport
+      parentRoute: typeof rootRoute
+    }
+    '/login/': {
+      id: '/login/'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginIndexImport
       parentRoute: typeof rootRoute
     }
     '/sub-next/': {
@@ -124,6 +152,8 @@ declare module '@tanstack/react-router' {
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/login/callback': typeof LoginCallbackRoute
+  '/login': typeof LoginIndexRoute
   '/sub-next': typeof SubNextIndexRoute
   '/sub-nuxt': typeof SubNuxtIndexRoute
   '/sub-react': typeof SubReactIndexRoute
@@ -134,6 +164,8 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/login/callback': typeof LoginCallbackRoute
+  '/login': typeof LoginIndexRoute
   '/sub-next': typeof SubNextIndexRoute
   '/sub-nuxt': typeof SubNuxtIndexRoute
   '/sub-react': typeof SubReactIndexRoute
@@ -145,6 +177,8 @@ export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/login/callback': typeof LoginCallbackRoute
+  '/login/': typeof LoginIndexRoute
   '/sub-next/': typeof SubNextIndexRoute
   '/sub-nuxt/': typeof SubNuxtIndexRoute
   '/sub-react/': typeof SubReactIndexRoute
@@ -157,6 +191,8 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/about'
+    | '/login/callback'
+    | '/login'
     | '/sub-next'
     | '/sub-nuxt'
     | '/sub-react'
@@ -166,6 +202,8 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/about'
+    | '/login/callback'
+    | '/login'
     | '/sub-next'
     | '/sub-nuxt'
     | '/sub-react'
@@ -175,6 +213,8 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/about'
+    | '/login/callback'
+    | '/login/'
     | '/sub-next/'
     | '/sub-nuxt/'
     | '/sub-react/'
@@ -186,6 +226,8 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
+  LoginCallbackRoute: typeof LoginCallbackRoute
+  LoginIndexRoute: typeof LoginIndexRoute
   SubNextIndexRoute: typeof SubNextIndexRoute
   SubNuxtIndexRoute: typeof SubNuxtIndexRoute
   SubReactIndexRoute: typeof SubReactIndexRoute
@@ -196,6 +238,8 @@ export interface RootRouteChildren {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
+  LoginCallbackRoute: LoginCallbackRoute,
+  LoginIndexRoute: LoginIndexRoute,
   SubNextIndexRoute: SubNextIndexRoute,
   SubNuxtIndexRoute: SubNuxtIndexRoute,
   SubReactIndexRoute: SubReactIndexRoute,
@@ -215,6 +259,8 @@ export const routeTree = rootRoute
       "children": [
         "/",
         "/about",
+        "/login/callback",
+        "/login/",
         "/sub-next/",
         "/sub-nuxt/",
         "/sub-react/",
@@ -227,6 +273,12 @@ export const routeTree = rootRoute
     },
     "/about": {
       "filePath": "about.tsx"
+    },
+    "/login/callback": {
+      "filePath": "login/callback.tsx"
+    },
+    "/login/": {
+      "filePath": "login/index.tsx"
     },
     "/sub-next/": {
       "filePath": "sub-next/index.tsx"

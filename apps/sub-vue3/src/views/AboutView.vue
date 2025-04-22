@@ -9,7 +9,7 @@ import { onMounted } from 'vue';
 import { helloWorld, configureApi } from '@ljy/api-client';
 configureApi('http://127.0.0.1:3000');
 onMounted(async () => {
-  const [error, data] = await helloWorld.helloWorldControllerGetHello({ name: 'John' });
+  const [error, data] = await helloWorld.helloWorldControllerPostHello({ name: 'John' });
   if (error) return;
   console.log(data?.message);
 });

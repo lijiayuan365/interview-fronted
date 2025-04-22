@@ -1,12 +1,12 @@
 // src/routes/__root.tsx
 import { createRootRoute, Outlet, Link } from '@tanstack/react-router';
 import { Layout, Menu } from 'antd';
-import { HomeOutlined, InfoCircleOutlined, UserOutlined } from '@ant-design/icons';
+import { HomeOutlined, UserOutlined } from '@ant-design/icons';
 import { useState } from 'react';
 import type { MenuProps } from 'antd';
 import type { ReactNode } from 'react';
 import logo from '../assets/logo.svg';
-const { Sider, Content } = Layout;
+const { Header, Content } = Layout;
 
 interface RouteItem {
   key: string;
@@ -17,8 +17,6 @@ interface RouteItem {
 
 export const Route = createRootRoute({
   component: () => {
-    const [collapsed, setCollapsed] = useState(false);
-    
     // 定义路由数组
     const routes: RouteItem[] = [
       {
@@ -62,26 +60,25 @@ export const Route = createRootRoute({
     
     return (
       <Layout className="min-h-screen h-screen">
-        <Sider collapsible collapsed={collapsed} onCollapse={(value) => setCollapsed(value)}>
-          <div className="flex justify-center items-center h-12 mx-4 my-4">
-            <Link to="/">
-              <img src={logo} alt="logo" className="w-12 h-12" />
+        <Header style={{ padding: 0 }} className="flex items-center bg-white shadow">
+          <div className="flex items-center">
+            <Link to="/" className="flex items-center ml-8 mr-8">
+              <img src={logo} alt="logo" className="w-8 h-8" />
             </Link>
+            <Menu 
+              mode="horizontal"
+              defaultSelectedKeys={['1']} 
+              items={menuItems}
+              className="flex-1"
+              theme='dark'
+            />
           </div>
-          <Menu 
-            theme="dark" 
-            defaultSelectedKeys={['1']} 
-            mode="inline" 
-            items={menuItems} 
-          />
-        </Sider>
-        <Layout className="site-layout">
-          <Content className="m-4">
-            <div className="h-full bg-white">
-              <Outlet /> {/* 子路由渲染位置 */}
-            </div>
-          </Content>
-        </Layout>
+        </Header>
+        <Content>
+          <div className="h-full bg-white">
+            <Outlet /> {/* 子路由渲染位置 */}
+          </div>
+        </Content>
       </Layout>
     );
   },

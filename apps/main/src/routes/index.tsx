@@ -1,3 +1,4 @@
+import { useLayoutEffect, useEffect, useState } from 'react';
 import { createFileRoute } from '@tanstack/react-router'
 import { Card, Typography, Divider, Button, Space, Row, Col } from 'antd'
 import { GithubOutlined, CloudOutlined, CodeOutlined, AppstoreOutlined } from '@ant-design/icons'
@@ -8,9 +9,53 @@ export const Route = createFileRoute('/')({
 
 function RouteComponent() {
   const { Title, Paragraph, Text, Link } = Typography;
+
+  const [count, setCount] = useState(0)
+  const changeCount = () => {
+    setCount(count + 1);
+    // setCount(prev => {
+    //   console.log(prev, 'prev1');
+    //   return prev + 1;
+    // });
+    // setCount(prev => {
+    //   console.log(prev, 'prev2');
+    //   return prev + 1;
+    // });
+    return;
+    setTimeout(() => {
+      setCount(count + 1);
+      setCount(count + 1);
+      console.log(count, '1');
+    }, 0);
+
+    // console.log(count, '1');
+    // setCount(prev => prev + 1);
+    // console.log(count, '2');
+    // setCount(count + 1);
+    // setCount(count + 1);
+  }
+  // document.querySelector('button')?.addEventListener('click', () => {
+  //   debugger;
+  //   setCount(count + 1);
+  //   console.log('===click==');
+  //   setCount(count + 1);
+  // });
+
+  const goGithub = (url: string) => {
+    window.open(url, '_blank');
+  }
+  useEffect(() => {
+    console.log(count, 'count');
+    return () => console.log('++++++', count)
+  }, [count]);
+  useLayoutEffect(() => {
+    console.log(count, 'count layoutEffect');
+    return () => console.log('=====', count)
+  }, [count]);
   
   return (
     <div className="py-8 px-6">
+      {/* <Button onClick={changeCount}>点击 {count}</Button> */}
       <Typography>
         <Title level={2} className="mb-6 text-center">无界微前端演示项目</Title>
         
@@ -21,7 +66,16 @@ function RouteComponent() {
               className="h-full shadow-sm hover:shadow-md transition-shadow"
             >
               <Paragraph>
-                本项目使用赛博善人 <Text strong>Vercel</Text> 进行免费静态部署，国内网络访问可能受到一定影响。后端项目计划构建Docker镜像并发布至Docker Hub，本地通过docker-compose部署提供本地服务。
+                本项目使用赛博善人 <Text strong>Vercel</Text> 进行免费静态部署，国内网络访问可能受到一定影响。
+              </Paragraph>
+              <Paragraph>
+                后端拉取项目本地运行，或者直接拉 docker(可能不是最新版本)
+              </Paragraph>
+              <Paragraph>
+                docker run -d -p 3000:3000 lijiayuan/interview-backend
+              </Paragraph>
+              <Paragraph>
+                后端接口文档地址：<a href="http://localhost:3000/api/docs" target="_blank" rel="noopener noreferrer">http://localhost:3000/api/docs</a>
               </Paragraph>
             </Card>
           </Col>
@@ -61,10 +115,10 @@ function RouteComponent() {
         
         <Space direction="vertical" className="w-full">
           <Space align="center" className="w-full justify-center">
-            <Button type="primary" icon={<GithubOutlined />} href="https://github.com/lijiayuan365/interview-frontend" target="_blank">
+            <Button className="p-2 mr-4" type="primary" icon={<GithubOutlined />} onClick={() => goGithub('https://github.com/lijiayuan365/interview-frontend')}>
               前端项目仓库
             </Button>
-            <Button type="primary" icon={<GithubOutlined />} href="https://github.com/lijiayuan365/interview-backend" target="_blank">
+            <Button className="p-2" type="primary" icon={<GithubOutlined />} onClick={() => goGithub('https://github.com/lijiayuan365/interview-backend')}>
               后端项目仓库
             </Button>
           </Space>
