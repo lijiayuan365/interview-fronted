@@ -5,7 +5,8 @@ pnpm-lock.yaml
 package-lock.json
 
 # Build outputs
-dist
+/dist
+/apps/**/dist
 .next
 out
 build
