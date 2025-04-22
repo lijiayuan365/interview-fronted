@@ -15,6 +15,8 @@ export function configureApi(baseURL: string) {
 
 // 导出预配置的 API 实例
 import { HelloWorld } from './HelloWorld';
+import { Upload } from './Upload';
 
 // 预配置的 API 实例
 export const helloWorld = new HelloWorld(httpClient);
+export const upload = new Upload(httpClient);
