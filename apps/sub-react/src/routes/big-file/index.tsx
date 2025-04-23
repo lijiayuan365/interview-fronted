@@ -1,6 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router';
 import { ContentType, upload } from '@ljy/api-client';
 import { useState } from 'react';
+import to from 'await-to-js';
 import {
   Button,
   Upload,
@@ -14,7 +15,7 @@ import {
 import { UploadOutlined, FileOutlined } from '@ant-design/icons';
 import type { UploadProps } from 'antd';
 import type { RcFile } from 'antd/es/upload/interface';
-
+import { calculateFileHash, calculateBufferHash } from '../../utils';
 export const Route = createFileRoute('/big-file/')({
   component: RouteComponent,
 });
@@ -25,23 +26,50 @@ function RouteComponent() {
   // 文件相关状态和处理方法
   const [file, setFile] = useState<RcFile | null>(null);
   const [fileHash, setFileHash] = useState('');
-  // 计算文件哈希
-  const calculateHash = async (file: RcFile): Promise<string> => {
-    return new Promise((resolve) => {
-      const reader = new FileReader();
-      reader.readAsArrayBuffer(file);
-      reader.onload = (e) => {
-        const buffer = e.target?.result as ArrayBuffer;
-        crypto.subtle.digest('SHA-256', buffer).then((hash) => {
-          const hashArray = Array.from(new Uint8Array(hash));
-          const hashHex = hashArray
-            .map((b) => b.toString(16).padStart(2, '0'))
-            .join('');
-          resolve(hashHex);
-        });
-      };
-    });
-  };
+  const [hashLoading, setHashLoading] = useState(false);
+  
+  // // 计算文件哈希
+  // const calculateHash = async (file: RcFile): Promise<string> => {
+  //   return new Promise((resolve, reject) => {
+  //     const reader = new FileReader();
+      
+  //     reader.onload = async (e) => {
+  //       try {
+  //         const buffer = e.target?.result as ArrayBuffer;
+  //         // 在 Worker 中进行计算，避免阻塞主线程
+  //         const hashWorker = new Worker(new URL('../../workers/hash.worker.ts', import.meta.url));
+          
+  //         hashWorker.onmessage = (e) => {
+  //           const { type, hash, error } = e.data;
+  //           hashWorker.terminate();
+            
+  //           if (type === 'error') {
+  //             reject(new Error(error));
+  //           } else {
+  //             resolve(hash);
+  //           }
+  //         };
+  //         hashWorker.postMessage({ buffer });
+  //       } catch (error) {
+  //         reject(error);
+  //       }
+  //     };
+
+  //     reader.onprogress = (event) => {
+  //       if (event.lengthComputable) {
+  //         // console.log(event.loaded, event.total);
+  //         // 将文件读取进度
+  //       }
+  //     };
+
+  //     reader.onerror = () => {
+  //       reject(new Error('文件读取失败'));
+  //     };
+
+  //     reader.readAsArrayBuffer(file);
+  //   });
+  // };
+
   // 处理文件选择
   const handleFileChange: UploadProps['onChange'] = async (info) => {
     const newFile = info.file as RcFile;
@@ -52,11 +80,13 @@ function RouteComponent() {
       setUploadedChunks([]);
 
       // 计算文件哈希
-      messageApi.loading('正在计算文件哈希...');
-      const hash = await calculateHash(newFile);
-      messageApi.destroy();
-      setFileHash(hash);
-      messageApi.success('文件哈希计算完成');
+      messageApi.loading({ content: '正在计算文件哈希...', key: 'hashCalculation' });
+        setHashLoading(true);
+        const [err, hash] = await to(calculateFileHash(newFile));
+        setHashLoading(false);
+        if (err) return messageApi.error({ content: '文件哈希计算失败', key: 'hashCalculation' });
+        setFileHash(hash);
+        messageApi.success({ content: '文件哈希计算完成', key: 'hashCalculation' });
     }
   };
 
@@ -126,14 +156,8 @@ function RouteComponent() {
 
       // 计算分片哈希
       const chunkArrayBuffer = await chunk.arrayBuffer();
-      const chunkHashBuffer = await crypto.subtle.digest(
-        'SHA-256',
-        chunkArrayBuffer
-      );
-      const chunkHashArray = Array.from(new Uint8Array(chunkHashBuffer));
-      const chunkHash = chunkHashArray
-        .map((b) => b.toString(16).padStart(2, '0'))
-        .join('');
+      const [chunkErr, chunkHash] = await to(calculateBufferHash(chunkArrayBuffer));
+      if (chunkErr) return messageApi.error('分片哈希计算失败');
       // 创建FormData
       const formData = new FormData();
       formData.append('file', chunk);
@@ -251,7 +275,7 @@ function RouteComponent() {
         <Space direction='vertical' style={{ width: '100%' }}>
           <Space align='start'>
             <Upload {...uploadProps}>
-              <Button icon={<UploadOutlined />}>选择文件</Button>
+              <Button loading={hashLoading} icon={<UploadOutlined />}>选择文件</Button>
             </Upload>
             <div>
               {file && (
@@ -268,7 +292,6 @@ function RouteComponent() {
               )}
             </div>
           </Space>
-
           <Divider />
 
           <Space direction='vertical' style={{ width: '100%' }}>

@@ -11,11 +11,12 @@
     "preview": "rsbuild preview"
   },
   "dependencies": {
-    "@ljy/api-client": "workspace:*",
     "@ant-design/icons": "^6.0.0",
+    "@ljy/api-client": "workspace:*",
     "@rsbuild/plugin-react": "^1.1.1",
     "@tanstack/react-router": "^1.116.0",
     "antd": "^5.24.6",
+    "await-to-js": "^3.0.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1"
   },
